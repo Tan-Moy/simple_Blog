@@ -1,0 +1,24 @@
+{
+  "name": "simple_blog",
+  "version": "1.0.0",
+  "description": "A blog app using seamntic UI and restFull routing",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tan-Moy/simple_Blog.git"
+  },
+  "author": "Tan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tan-Moy/simple_Blog/issues"
+  },
+  "homepage": "https://github.com/Tan-Moy/simple_Blog#readme",
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "express": "^4.14.1",
+    "mongoose": "^4.8.0"
+  }
+}
