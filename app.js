@@ -25,8 +25,18 @@ Blog.create({
 });
 
 //RESTful Routes
-app.get("/blogs",function(req,res){
-    res.render('index');
+app.get("/",function(req,res){
+    res.redirect("/blogs");
+});
+
+app.get("/blogs", function (req, res) {
+    Blog.find({},function(err,blogs){
+        if(err){
+            console.log("error");
+        }else{
+            res.render("index",{blogs:blogs});
+        }
+    });
 });
 
 
