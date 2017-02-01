@@ -18,28 +18,40 @@ var blogSchema = mongoose.Schema({
     created: { type: Date, default: Date.now }
 });
 var Blog = mongoose.model("Blog", blogSchema);
-Blog.create({
-    title: "Test Blog",
-    image: "https://images.duckduckgo.com/iu/?u=http%3A%2F%2Fwallpapercave.com%2Fwp%2FaZlqiAT.png&f=1",
-    body: "Hello There!!"
-});
+// Blog.create({
+//     title: "Test Blog",
+//     image: "https://images.duckduckgo.com/iu/?u=http%3A%2F%2Fwallpapercave.com%2Fwp%2FaZlqiAT.png&f=1",
+//     body: "Hello There!!"
+// });
 
 //RESTful Routes
-app.get("/",function(req,res){
+app.get("/", function (req, res) {
     res.redirect("/blogs");
 });
 
 app.get("/blogs", function (req, res) {
-    Blog.find({},function(err,blogs){
-        if(err){
+    Blog.find({}, function (err, blogs) {
+        if (err) {
             console.log("error");
-        }else{
-            res.render("index",{blogs:blogs});
+        } else {
+            res.render("index", { blogs: blogs });
         }
     });
 });
 
+app.get("/blogs/new", function (req, res) {
+    res.render('new');
+});
 
+app.post('/blogs', function (req, res) {
+    Blog.create(req.body.blog, function (err, newBlog) {
+        if (err) {
+            res.render('new');
+        } else {
+            res.redirect("/blogs");
+        }
+    });
+});
 
 
 
