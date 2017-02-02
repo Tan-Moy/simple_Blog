@@ -1,8 +1,8 @@
 //Initialize
 var express = require("express");
-app = express();
-bodyParser = require("body-parser");
-mongoose = require("mongoose");
+var app = express();
+var bodyParser = require("body-parser");
+var mongoose = require("mongoose");
 
 //Config
 mongoose.connect("mongodb://localhost/restful_blog_app");
@@ -25,12 +25,12 @@ var Blog = mongoose.model("Blog", blogSchema);
 // });
 
 //RESTful Routes
-app.get("/", function (req, res) {
+app.get("/", function(req, res) {
     res.redirect("/blogs");
 });
 
-app.get("/blogs", function (req, res) {
-    Blog.find({}, function (err, blogs) {
+app.get("/blogs", function(req, res) {
+    Blog.find({}, function(err, blogs) {
         if (err) {
             console.log("error");
         } else {
@@ -39,12 +39,12 @@ app.get("/blogs", function (req, res) {
     });
 });
 
-app.get("/blogs/new", function (req, res) {
+app.get("/blogs/new", function(req, res) {
     res.render('new');
 });
 
-app.post('/blogs', function (req, res) {
-    Blog.create(req.body.blog, function (err, newBlog) {
+app.post('/blogs', function(req, res) {
+    Blog.create(req.body.blog, function(err, newBlog) {
         if (err) {
             res.render('new');
         } else {
@@ -53,11 +53,26 @@ app.post('/blogs', function (req, res) {
     });
 });
 
+app.get("/blogs/:id", function(req, res) {
+    Blog.findById(req.params.id, function(err, foundBlog) {
+        if (err) {
+            res.redirect("/blogs");
+        } else {
+            res.render("show", { blog: foundBlog });
+        }
+    });
+});
+
+app.get("/blogs/:id/edit", function(req, res) {
+    res.render("edit");
+});
+
+
 
 
 
 
 //Server
-app.listen(8000, function () {
+app.listen(8000, function() {
     console.log("serving...");
 });
