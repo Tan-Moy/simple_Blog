@@ -1,6 +1,7 @@
 //Initialize
 var express = require("express");
 var app = express();
+var methodOverride = require("method-override");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 
@@ -9,6 +10,7 @@ mongoose.connect("mongodb://localhost/restful_blog_app");
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 
 //Schema + model
 var blogSchema = mongoose.Schema({
@@ -69,6 +71,16 @@ app.get("/blogs/:id/edit", function(req, res) {
             res.redirect("/blogs");
         } else {
             res.render("edit", { blog: foundBlog });
+        }
+    });
+});
+
+app.put("/blogs/:id", function(req, res) {
+    Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, updatedBlog) {
+        if (err) {
+            res.redirect("/blogs");
+        } else {
+            res.redirect("/blogs/" + req.params.id);
         }
     });
 });
